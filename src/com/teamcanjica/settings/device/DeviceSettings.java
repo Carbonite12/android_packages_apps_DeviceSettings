@@ -84,16 +84,20 @@ public class DeviceSettings extends Activity implements OnItemClickListener{
 	public static final String KEY_USE_CHARGEPUMP = "enable_chargepump";
 
 	// Screen
+	public static final String KEY_USE_2TAP2WAKE = "use_2tap2wake";
+	public static final String KEY_DT2W_TIMEOUT = "dt2w_timeout";
 	public static final String KEY_USE_SWEEP2WAKE = "use_sweep2wake";
 	public static final String KEY_X_SWEEP2WAKE = "x_sweep2wake";
 	public static final String KEY_Y_SWEEP2WAKE = "y_sweep2wake";
 	public static final String KEY_TOUCHSCREEN = "touchscreen";
 	public static final String KEY_TOUCHSCREEN_SENSITIVITY = "touchscreen_sensitivity";
-	public static final String KEY_SCREEN_COLOURS = "screen_colours";
+	public static final String KEY_SCREEN_VISUAL = "screen_visual";
 	public static final String KEY_PANEL_GAMMA = "panel_gamma";
+	public static final String KEY_FSYNC_CAT = "fsync_cat";
 	public static final String KEY_FSYNC_MODE = "fsync_mode";
 	public static final String KEY_SCREEN_OFF = "screen_off";
 	public static final String KEY_POWER_MENU = "power_menu";
+	public static final String KEY_MIN_BRIGHTNESS = "min_brightness";
 
 	// GPU
 	public static final String KEY_DISABLE_AUTOBOOST = "disable_autoboost";
@@ -118,6 +122,9 @@ public class DeviceSettings extends Activity implements OnItemClickListener{
 	public static final String KEY_SWITCH_STORAGE = "switch_storage";
 	public static final String KEY_BACKLIGHT = "backlight";
 	public static final String KEY_DISABLE_BLN = "disable_bln";
+	public static final String KEY_DISABLE_BLN_BLINK = "disable_bln_blink";
+	public static final String KEY_BLN_ONDELAY = "bln_ondelay";
+	public static final String KEY_BLN_OFFDELAY = "bln_offdelay";
 	public static final String KEY_BURNING_LED = "burning_led";
 	public static final String KEY_ENABLE_VOLTAGE = "enable_voltage";
 	public static final String KEY_CPU_VOLTAGE = "cpu_voltage";

@@ -29,6 +29,7 @@ import android.preference.PreferenceScreen;
 import android.util.Log;
 
 import com.teamcanjica.settings.device.DeviceSettings;
+import com.teamcanjica.settings.device.MasterListPreference;
 import com.teamcanjica.settings.device.R;
 import com.teamcanjica.settings.device.Utils;
 
@@ -36,6 +37,7 @@ public class ScreenFragmentActivity extends PreferenceFragment {
 
 	private static final String TAG = "NovaThor_Settings_Screen";
 
+	private static final String FILE_2TAP2WAKE_CODINA = "/sys/kernel/bt404/doubletap2wake";
 	private static final String FILE_SWEEP2WAKE_CODINA = "/sys/kernel/bt404/sweep2wake";
 	private static final String FILE_SWEEP2WAKE_JANICE = "/sys/kernel/mxt224e/sweep2wake";
 	private static final String FILE_EMULATOR = "/sys/kernel/abb-ponkey/emulator";
@@ -49,12 +51,21 @@ public class ScreenFragmentActivity extends PreferenceFragment {
 		getActivity().getActionBar().setTitle(getResources().getString(R.string.screen_name));
 		getActivity().getActionBar().setIcon(getResources().getDrawable(R.drawable.screen_icon));
 
+		PreferenceCategory touchscreenCategory = (PreferenceCategory) findPreference(DeviceSettings.KEY_TOUCHSCREEN);
+		PreferenceCategory visualCategory = (PreferenceCategory) findPreference(DeviceSettings.KEY_SCREEN_VISUAL);
 		// Compatibility check for codina (Panel Gamma & Touchscreen Sensitivity)
-		if(Utils.isCodina()) {
-			getPreferenceScreen().removePreference(findPreference(DeviceSettings.KEY_SCREEN_COLOURS));
-			PreferenceCategory touchscreenCategory = (PreferenceCategory) findPreference(DeviceSettings.KEY_TOUCHSCREEN);
+		if (Utils.isCodina()) {
+			visualCategory.removePreference(getPreferenceScreen().findPreference(DeviceSettings.KEY_PANEL_GAMMA));
 			touchscreenCategory.removePreference(getPreferenceScreen().findPreference(DeviceSettings.KEY_TOUCHSCREEN_SENSITIVITY));
+		// Compatibility check for janice (2Tap2Wake)
+		} else if (Utils.isJanice()) {
+			visualCategory.removePreference(getPreferenceScreen().findPreference(DeviceSettings.KEY_MIN_BRIGHTNESS));
+			touchscreenCategory.removePreference(getPreferenceScreen().findPreference(DeviceSettings.KEY_USE_2TAP2WAKE));
+			touchscreenCategory.removePreference(getPreferenceScreen().findPreference(DeviceSettings.KEY_DT2W_TIMEOUT));
 		}
+
+		if (!Utils.fileExists(MasterListPreference.FILE_FSYNC_MODE))
+			getPreferenceScreen().removePreference(findPreference(DeviceSettings.KEY_FSYNC_CAT));
 	}
 
 	@Override
@@ -65,7 +76,10 @@ public class ScreenFragmentActivity extends PreferenceFragment {
 
 		Log.w(TAG, "key: " + key);
 
-		if (key.equals(DeviceSettings.KEY_USE_SWEEP2WAKE)) {
+		if (key.equals(DeviceSettings.KEY_USE_2TAP2WAKE)) {
+			Utils.writeValue(FILE_2TAP2WAKE_CODINA, (((CheckBoxPreference) preference).
+					isChecked() ? "on" : "off"));
+		} else if (key.equals(DeviceSettings.KEY_USE_SWEEP2WAKE)) {
 			if (Utils.isJanice()) {
 				Utils.writeValue(FILE_SWEEP2WAKE_JANICE, (((CheckBoxPreference) preference).
 						isChecked() ? "on" : "off"));
@@ -91,6 +105,8 @@ public class ScreenFragmentActivity extends PreferenceFragment {
 			Utils.writeValue(FILE_SWEEP2WAKE_JANICE, sharedPrefs.getBoolean(
 					DeviceSettings.KEY_USE_SWEEP2WAKE, false) ? "on" : "off");
 		} else if (Utils.isCodina()) {
+			Utils.writeValue(FILE_2TAP2WAKE_CODINA, sharedPrefs.getBoolean(
+					DeviceSettings.KEY_USE_2TAP2WAKE, false) ? "on" : "off");
 			Utils.writeValue(FILE_SWEEP2WAKE_CODINA, sharedPrefs.getBoolean(
 					DeviceSettings.KEY_USE_SWEEP2WAKE, false) ? "on" : "off");
 		}

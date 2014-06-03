@@ -25,12 +25,14 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.util.AttributeSet;
 
 public class MasterEditTextPreference extends EditTextPreference implements OnPreferenceChangeListener {
-	
+
+	private static final String FILE_DT2W_TIMEOUT = "/sys/kernel/bt404/doubletap2wake";
 	private static final String FILE_S2WTHRESH_CODINA = "/sys/kernel/bt404/sweep2wake";
 	private static final String FILE_S2WTHRESH_JANICE = "/sys/kernel/mxt224e/sweep2wake";
 	private static final String FILE_BOOST_DELAY = "/sys/kernel/mali/mali_boost_delay";
 	private static final String FILE_BOOST_HIGH = "/sys/kernel/mali/mali_boost_high";
 	private static final String FILE_BOOST_LOW = "/sys/kernel/mali/mali_boost_low";
+	private static final String FILE_BLN_DELAY = "/sys/kernel/bln/blink_mode";
 	
 	public MasterEditTextPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -41,8 +43,10 @@ public class MasterEditTextPreference extends EditTextPreference implements OnPr
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
 
 		String key = preference.getKey();
-		
-		if (key.equals(DeviceSettings.KEY_X_SWEEP2WAKE)) {
+
+		if (key.equals(DeviceSettings.KEY_DT2W_TIMEOUT)) {
+			Utils.writeValue(FILE_DT2W_TIMEOUT, "timeout=" + (String) newValue);
+		} else if (key.equals(DeviceSettings.KEY_X_SWEEP2WAKE)) {
 			Utils.writeValue((Utils.isCodina() ?
 					FILE_S2WTHRESH_CODINA : FILE_S2WTHRESH_JANICE), "threshold_x=" + newValue);
 		} else if (key.equals(DeviceSettings.KEY_Y_SWEEP2WAKE)) {
@@ -54,6 +58,10 @@ public class MasterEditTextPreference extends EditTextPreference implements OnPr
 			Utils.writeValue(FILE_BOOST_HIGH, "threshold=" + (String) newValue);
 		} else if (key.equals(DeviceSettings.KEY_BOOST_LOWTHRESH)) {
 			Utils.writeValue(FILE_BOOST_LOW, "threshold=" + (String) newValue);
+		} else if (key.equals(DeviceSettings.KEY_BLN_ONDELAY)) {
+			Utils.writeValue(FILE_BLN_DELAY, "ondelay=" + (String) newValue);
+		} else if (key.equals(DeviceSettings.KEY_BLN_OFFDELAY)) {
+			Utils.writeValue(FILE_BLN_DELAY, "offdelay=" + (String) newValue);
 		}
 
 		return true;
@@ -63,6 +71,10 @@ public class MasterEditTextPreference extends EditTextPreference implements OnPr
 
 		SharedPreferences sharedPrefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
+
+		// 2Tap2Wake timeout
+		Utils.writeValue(FILE_DT2W_TIMEOUT, sharedPrefs.getString(
+				DeviceSettings.KEY_DT2W_TIMEOUT, "250"));
 
 		// Sweep2wake x and y threshold
 		if (Utils.isCodina()) {
@@ -90,6 +102,14 @@ public class MasterEditTextPreference extends EditTextPreference implements OnPr
 		// Mali boost low threshold
 		Utils.writeValue(FILE_BOOST_LOW, "threshold=" + sharedPrefs.getString(
 				DeviceSettings.KEY_BOOST_LOWTHRESH, "64"));
+
+		// BLN Delay
+		Utils.writeValue(FILE_BLN_DELAY, "ondelay=" + sharedPrefs.getString(
+				DeviceSettings.KEY_BLN_ONDELAY, "1000"));
+
+		Utils.writeValue(FILE_BLN_DELAY, "offdelay=" + sharedPrefs.getString(
+				DeviceSettings.KEY_BLN_OFFDELAY, "1000"));
+
 	}
 
 }

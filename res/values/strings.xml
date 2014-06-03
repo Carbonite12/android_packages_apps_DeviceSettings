@@ -15,13 +15,13 @@
     <!-- ACTIONBAR: About -->
     <string name="about_title">TeamCanjica\nNovaThor Settings</string>
     <string name="about_developers_title">Developers</string>
-    <string name="about_developers_summary">Rox\nzwliew\nfrapeti\nt4n017</string>
+    <string name="about_developers_summary" translatable="false">Rox\nzwliew\nfrapeti\nt4n017</string>
     <string name="about_translators_title">Translators</string>
-    <string name="about_translators_summary">/</string>
+    <string name="about_translators_summary">Crowdin Translators</string>
     <string name="about_version_title">Version Number</string>
-    <string name="about_version_summary">1.3</string>
-    <string name="about_copyright1">Copyright © 2014 TeamCanjica</string>
-    <string name="about_copyright2">2013 Cyanogenmod</string>
+    <string name="about_version_summary" translatable="false">1.5</string>
+    <string name="about_copyright1" translatable="false">Copyright © 2014 TeamCanjica</string>
+    <string name="about_copyright2" translatable="false">2013 Cyanogenmod</string>
 
     <!-- CATEGORY: Settings -->
     <string name="settings_name">Settings</string>
@@ -78,7 +78,7 @@
     <string name="dt_dialog_message">Select end battery level of charging</string>
     <string name="rt_title_head">Recharging threshold</string>
     <string name="rt_summary_head">After this level is reached phone will start charging again. <b>Note: Recharging threshold must be lower than discharging threshold!</b> </string>
-    <string name="rt_dialog_message">Select recherging battery level</string>
+    <string name="rt_dialog_message">Select recharging battery level</string>
 
     <!-- SUBCATEGORY: Charge Status -->
     <string name="eoc_subcat_title">Charge status</string>
@@ -180,6 +180,10 @@
 
     <!-- SUBCATEGORY: TouchScreen -->
     <string name="touchscreen_subcat_title">Touchscreen</string>
+    <string name="use_2tap2wake_title_head">2Tap2Wake</string>
+    <string name="use_2tap2wake_summary_head">Wake device with double tap on screen.</string>
+    <string name="dt2w_timeout_title_head">2Tap2Wake Timeout</string>
+    <string name="dt2w_timeout_summary_head">Set maximum delay between 2 taps to unlock device in ms</string>
     <string name="use_sweep2wake_title_head">Sweep2Wake</string>
     <string name="use_sweep2wake_summary_head">Unlock device with a swipe.\nSet x and y axis threshold to 0 for enabling Touch2Wake.</string>
     <string name="x_sweep2wake_title_head">S2W Threshold X</string>
@@ -189,10 +193,13 @@
     <string name="touchscreen_sensitivity_title_head">Touch sensitivity</string>
     <string name="touchscreen_sensitivity_summary_head">Set touch panel sensitivity</string>
 
-    <!-- SUBCATEGORY: Screen Colours -->
-    <string name="screen_colours_subcat_title">Colors</string>
+    <!-- SUBCATEGORY: Screen Visual -->
+    <string name="screen_visual_subcat_title">Visual</string>
     <string name="panel_gamma_title_head">Screen Gamma</string>
     <string name="panel_gamma_summary_head">Set screen gamma value</string>
+    <string name="min_brightness_title_head">Minimum Brightness</string>
+    <string name="min_brightness_summary_head">Adjust the minimum brightness of the brightness slider.</string>
+    <string name="min_brightness_dialog_message">Adjust the minimum brightness.</string>
 
     <!-- SUBCATEGORY: FSync -->
     <string name="fsync_subcat_title">FSync</string>
@@ -234,7 +241,7 @@
     <!-- SUBCATEGORY: GPU MISC -->
     <string name="gpu_misc_subcat_title">Miscellaneous</string>
     <string name="gpu_voltage_title_head">GPU Undervolting</string>
-    <string name="gpu_voltage_summary_head">BEWARE! HIGHLY RECOMMENDED TO DISABLE RESTORE ON REBOOT IN SETTINGS! These voltages also supply other engines like <b>Video, Image, Audio engine</b>, not only GPU! UNDERVOLT AT YOUR OWN RISK!</string>
+    <string name="gpu_voltage_summary_head">These voltages also supply other engines like <b>Video, Image, Audio engine</b>, not only GPU! UNDERVOLT AT YOUR OWN RISK!</string>
     <string name="gpu_voltage_dialog_message">Adjust your GPU voltage change.</string>
     <string name="mali_l2_mr_title_head">Mali L2 Max Reads</string>
     <string name="mali_l2_mr_summary_head">Increasing it may improve graphics performance.</string>
@@ -277,6 +284,12 @@
     <string name="backlight_subcat_title">Backlight</string>
     <string name="disable_bln_title_head">Disable BLN</string>
     <string name="disable_bln_summary_head">You won\'t be able to be notified of notifications through your backlight if BLN is disabled.</string>
+    <string name="disable_bln_blink_title_head">Disable BLN blink</string>
+    <string name="disable_bln_blink_summary_head">Disables BLN blinking.</string>
+    <string name="bln_ondelay_title_head">BLN blink duration time</string>
+    <string name="bln_ondelay_summary_head">Configure BLN blink duration time in ms.</string>
+    <string name="bln_offdelay_title_head">BLN blink delay time</string>
+    <string name="bln_offdelay_summary_head">Configure delay between BLN blinking in ms.</string>
 
     <!-- SUBCATEGORY: Torch-->
     <string name="torch_subcat_title">Torch</string>
