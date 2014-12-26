@@ -69,7 +69,14 @@ public class AdvancedFragmentActivity extends PreferenceFragment {
 
 		Log.w(TAG, "key: " + key);
 
-		if (key.equals(DeviceSettings.KEY_USE_ACCELEROMETER_CALIBRATION)) {
+		if (key.equals(DeviceSettings.KEY_SWITCH_STORAGE)) {
+			SystemProperties.set("persist.sys.vold.switchexternal", (((CheckBoxPreference) preference)
+					.isChecked() ? "1" : "0"));
+			Utils.showDialog(getActivity(),
+					getString(R.string.reboot_dialog_head),
+					getString(R.string.reboot_dialog_message),
+					true);
+		} else if (key.equals(DeviceSettings.KEY_USE_ACCELEROMETER_CALIBRATION)) {
 			Utils.writeValue(FILE_ACCELEROMETER_CALIB, ((CheckBoxPreference) preference)
 					.isChecked());
 			getPreferenceScreen().findPreference(DeviceSettings.KEY_CALIBRATE_ACCELEROMETER).setEnabled(
@@ -104,6 +111,9 @@ public class AdvancedFragmentActivity extends PreferenceFragment {
 	public static void restore(Context context) {
 		SharedPreferences sharedPrefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
+
+		SystemProperties.set("persist.sys.vold.switchexternal", sharedPrefs.getBoolean(
+				DeviceSettings.KEY_SWITCH_STORAGE, false) ? "1" : "0");
 
 		Utils.writeValue(FILE_BURNING_LED, sharedPrefs.getBoolean(
 				DeviceSettings.KEY_BURNING_LED, false) ? "1" : "0");

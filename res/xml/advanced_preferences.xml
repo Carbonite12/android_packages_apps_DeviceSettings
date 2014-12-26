@@ -2,6 +2,13 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:teamcanjica="http://schemas.android.com/apk/res/com.teamcanjica.settings.device" >
 
+    <PreferenceCategory android:title="@string/storage_subcat_title" >
+        <CheckBoxPreference
+            android:key="switch_storage"
+            android:summary="@string/switch_storage_summary_head"
+            android:title="@string/switch_storage_title_head" />
+    </PreferenceCategory>
+
    <PreferenceCategory android:title="@string/backlight_subcat_title"
        android:key="backlight" >
         <CheckBoxPreference
